@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>City</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="City name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">City name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="regionId">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchRegionIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let region of  filterRegionList()" [value]="region.id">
+                      {{region.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.regionId.errors?.required">Region is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="countryId">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchCountryIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let country of  filterCountryList()" [value]="country.id">
+                      {{country.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.countryId.errors?.required">Country is required</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!cityService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="cityService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

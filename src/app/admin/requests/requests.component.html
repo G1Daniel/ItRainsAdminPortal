@@ -1,0 +1,61 @@
+<div class="p-1">
+  <mat-card class="p-0">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 p-1">
+          <h2>Requests List</h2>
+
+
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="mat-table admin-table">
+          <div class="mat-header-row">
+              <div class="mat-header-cell">Company Name</div>
+              <div class="mat-header-cell">Donation Type</div>
+              <div class="mat-header-cell">Available Quantity</div>
+              <div class="mat-header-cell">Measurement/Condition</div>
+              <div class="mat-header-cell">Actions</div>
+          </div>
+
+          <button class="loading"  *ngIf="RequestService.loading" color="primary">
+              <app-loading-spinner></app-loading-spinner>
+           </button>
+          <div *ngIf="!RequestService.loading">
+             <div  *ngFor="let request of getAllRequests() | paginate: { itemsPerPage: count, currentPage: page }" class="mat-row">
+              <div class="mat-cell">{{getCompany(request.companyId)}}</div>
+              <div *ngIf="getDonation(request.donationId).donationTypeId.length==1" class="mat-cell">{{getDonationType(getDonation(request.donationId).donationTypeId[0])}}</div>
+              <div *ngIf="getDonation(request.donationId).donationTypeId.length>1" class="mat-cell">
+                <span *ngFor="let item of getDonation(request.donationId).donationTypeId; let i=index">
+                  {{getDonationType(item)}}{{i === items.length - 1 ? '' : ', '}}
+               </span>
+              </div>
+              <div class="mat-cell">{{getDonation(request.donationId).quantity}}</div>
+              <div *ngIf="getDonation(request.donationId).donationTypeId.length==1" class="mat-cell">{{getDonation(request.donationId).isInKg==true?'KG':'Litre'}}</div>
+              <div *ngIf="getDonation(request.donationId).donationTypeId.length>1" class="mat-cell">
+                 {{getDonation(request.donationId).condition}}
+              </div>
+              <div class="mat-cell">
+                <button  *ngIf="!requesting" button  mat-raised-button color="primary" class="px-1" (click)="openRequestDialog(request)">
+                    Offer
+                </button>
+                <button *ngIf="requesting" button  mat-raised-button color="primary" class="w-20">
+                  <mat-icon><mat-spinner diameter="20" color="accent">
+                  </mat-spinner></mat-icon>
+              </button>
+            </div>
+
+
+          </div>
+      </div>
+      </div>
+  </mat-card>
+
+
+
+  <div *ngIf="getAllRequests().length > 6" fxLayout="row wrap">
+      <div fxFlex="100">
+          <mat-card class="p-2 text-center">
+              <pagination-controls class="product-pagination" autoHide="true" maxSize="5" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+</div>

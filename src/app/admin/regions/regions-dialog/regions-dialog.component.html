@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Region</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Region name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Region name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Code</mat-label>
+                  <input matInput placeholder="Code name" formControlName="code" required>
+                  <mat-error *ngIf="form.controls.code.errors?.required">Code is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>State</mat-label>
+                  <mat-select formControlName="stateId">
+                      <div class="search-space">
+                          <mat-icon class="mx-2">search</mat-icon>
+                          <input [(ngModel)]="searchStateIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                        </div>
+                      <mat-option *ngFor="let state of  filterStateList()" [value]="state.id">
+                        {{state.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.controls.stateId.errors?.required">State is required</mat-error>
+              </mat-form-field>
+            </div>
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!regionService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="regionService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

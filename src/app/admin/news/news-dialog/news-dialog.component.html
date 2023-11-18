@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>News</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+
+
+           <div class="photo-section">
+            <img [src]="url1" height="150">
+            <input type="file" accept="image/*" formControlName="imageUrl" (change)="onImageSelected($event)"/>
+            <mat-error *ngIf="form.controls.imageUrl.errors?.required">News image is required</mat-error>
+           </div>
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="News Title" formControlName="title" required>
+                    <mat-error *ngIf="form.controls.title.errors?.required">News title is required</mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Content</mat-label>
+                  <textarea matInput  placeholder="Content" formControlName="content" required style="height:350px;"></textarea>
+                  <mat-error *ngIf="form.controls.content.errors?.required">Content is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!newsService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="newsService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

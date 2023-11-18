@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Notification Type</h1>
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Title</mat-label>
+                    <input matInput placeholder="Notification title" formControlName="title" required>
+                    <mat-error *ngIf="form.controls.title.errors?.required">Notification title is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Message</mat-label>
+                  <textarea matInput placeholder="message" formControlName="message" required></textarea>
+                  <mat-error *ngIf="form.controls.message.errors?.required">Message is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!NotificationService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="NotificationService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

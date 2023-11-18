@@ -1,0 +1,28 @@
+.search-space{
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+
+input{
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  border: none;
+ }
+ input:focus{
+  outline: none;
+ }
+ .mat-dialog-content{
+  width: 90%;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.8em 0px !important;}
+
+@media screen and (max-width:768){
+  .mat-dialog-content{
+    width: 100%;
+  }
+}

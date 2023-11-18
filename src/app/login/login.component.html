@@ -1,0 +1,33 @@
+<div class="content">
+  <div class="right-section">
+    <div class="image-section">
+    </div>
+    <span class="moto">Your support and contributions will enable us to meet our goals and improve conditions. Your generous donation will fund our mission.</span>
+  </div>
+  <form class="left-section" #myForm="ngForm">
+    <!-- <div class="logo"></div> -->
+    <span class="powered-text" style="margin: 20px 0;color:black;">I<span style="color: #1976d2;">Share</span></span>
+    <mat-divider style="margin-right: 10px;"></mat-divider>
+    <div class="left-content">
+      <h2>Sign In</h2>
+      <input  class="input-container" type="text" placeholder="User name" [(ngModel)]='userName' name="username" #username="ngModel" required>
+      <input class="input-container" type="password" placeholder="Password" [(ngModel)]='password' name="pswd" #pswd="ngModel" required>
+      <mat-error *ngIf="username.errors?.['required'] && myForm.submitted">
+        User name is required
+      </mat-error>
+      <mat-error *ngIf="!username.errors?.['required']&&pswd.errors?.['required'] && myForm.submitted">
+        Password is required
+      </mat-error>
+      <div *ngIf="!myForm.valid" type="submit" class="login-btn">Sign In</div>
+      <div *ngIf="myForm.valid  && !authService.loading" type="submit" class="login-btn" (click)="login()">Sign In</div>
+      <div  *ngIf="myForm.valid && authService.loading" class="login-btn">
+        <mat-icon><mat-spinner diameter="20" color="accent">
+        </mat-spinner></mat-icon>
+      </div>
+      <div class="bottom-text">
+        <span class="powered-text">Powered by</span>
+        <span class="moto" style="font-size: 18px;color: #000;padding: 0;"> It Rains Food Donation Bank.</span>
+      </div>
+    </div>
+  </form>
+</div>

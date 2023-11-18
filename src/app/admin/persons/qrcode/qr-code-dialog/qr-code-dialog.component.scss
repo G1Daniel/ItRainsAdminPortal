@@ -1,0 +1,21 @@
+.top-section{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.onhold-btn{
+  height: 30px;
+  width: 100px;
+  background-color: green;
+  color: #fff;
+  border-radius: 12px;
+  border: none;
+  margin-left: 10px;
+}
+@media print{
+  .onhold-btn{
+    display: none;
+  }
+
+}

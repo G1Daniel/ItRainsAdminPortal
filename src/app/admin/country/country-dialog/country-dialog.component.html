@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Country</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Country name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Country name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Code</mat-label>
+                  <input matInput placeholder="Code name" formControlName="code" required>
+                  <mat-error *ngIf="form.controls.code.errors?.required">Code is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!countryService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="countryService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

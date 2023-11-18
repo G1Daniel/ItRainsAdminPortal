@@ -1,0 +1,48 @@
+<div class="p-1">
+  <mat-card class="p-0">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 p-1">
+          <h2>Obtained Donations List</h2>
+
+
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="mat-table admin-table">
+          <div class="mat-header-row">
+              <div class="mat-header-cell">Company Name</div>
+              <div class="mat-header-cell">Donation Type</div>
+              <div class="mat-header-cell">Allowed Quantity</div>
+              <div class="mat-header-cell">Measurement/Condition</div>
+          </div>
+          <button class="loading"  *ngIf="ObtainedDonationService.loading" color="primary">
+              <app-loading-spinner></app-loading-spinner>
+           </button>
+          <div *ngIf="!ObtainedDonationService.loading">
+             <div  *ngFor="let donation of getAllObtainedDonations() | paginate: { itemsPerPage: count, currentPage: page }" class="mat-row">
+              <div class="mat-cell">{{getCompany(donation.companyId)}}</div>
+              <div *ngIf="getDonation(donation.donationId).donationTypeId.length==1" class="mat-cell">{{getDonationType(getDonation(donation.donationId).donationTypeId[0])}}</div>
+              <div *ngIf="getDonation(donation.donationId).donationTypeId.length>1" class="mat-cell">
+                <span *ngFor="let item of getDonation(donation.donationId).donationTypeId; let i=index">
+                  {{getDonationType(item)}}{{i === items.length - 1 ? '' : ', '}}
+               </span>
+              </div>
+              <div class="mat-cell">{{donation.allowedQuantity}}</div>
+              <div *ngIf="getDonation(donation.donationId).donationTypeId.length==1" class="mat-cell">{{getDonation(donation.donationId).isInKg==true?'KG':'Litre'}}</div>
+              <div *ngIf="getDonation(donation.donationId).donationTypeId.length>1" class="mat-cell">
+                 {{getDonation(donation.donationId).condition}}
+              </div>
+          </div>
+      </div>
+      </div>
+  </mat-card>
+
+
+
+  <div *ngIf="getAllObtainedDonations().length > 6" fxLayout="row wrap">
+      <div fxFlex="100">
+          <mat-card class="p-2 text-center">
+              <pagination-controls class="product-pagination" autoHide="true" maxSize="5" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+</div>

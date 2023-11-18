@@ -1,0 +1,61 @@
+<div class="p-1">
+  <mat-card class="p-0">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 p-1">
+          <h2>Donations List</h2>
+
+
+          <div fxLayout="row wrap" class="items-center">
+            <div class="mx-3">
+              <input type="search" class="form-control h-9 p-1" placeholder="Search.." [(ngModel)]="searchKey"/>
+            </div>
+                <!-- <button  mat-raised-button color="primary"  (click)="openDonationDialog(null,true)" class="w-20">
+                  <mat-icon>add_circle</mat-icon>
+                  Add
+              </button> -->
+          </div>
+
+
+
+      </div>
+      <mat-divider></mat-divider>
+      <div class="mat-table admin-table">
+          <div class="mat-header-row">
+              <div class="mat-header-cell">Donation Type</div>
+              <div class="mat-header-cell">Quantity</div>
+              <div class="mat-header-cell">Measurement</div>
+              <div class="mat-header-cell">Status</div>
+              <div class="mat-header-cell">Is Available</div>
+
+              <div class="mat-header-cell">Actions</div>
+          </div>
+          <button class="loading"  *ngIf="DonationService.loading" color="primary">
+              <app-loading-spinner></app-loading-spinner>
+           </button>
+          <div *ngIf="!DonationService.loading">
+             <div  *ngFor="let donation of getAllDonations() | paginate: { itemsPerPage: count, currentPage: page }" class="mat-row">
+              <div class="mat-cell">{{getDonationType(donation.donationTypeId[0])}}</div>
+              <div class="mat-cell">{{donation.quantity}}</div>
+              <div class="mat-cell">{{donation.isInKg==true?'KG':'Litre'}}</div>
+              <div class="mat-cell">{{donationStatusList[donation.status]}}</div>
+              <div class="mat-cell">{{donation.isAvailable==true?'Available':'Not Available'}}</div>
+              <div class="mat-cell">
+                  <button mat-mini-fab color="primary" class="mx-2" matTooltip="Edit" (click)="openDonationDialog(donation,false)">
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-mini-fab color="warn" matTooltip="Delete" class="mx-1" (click)="remove(donation)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </div>
+          </div>
+          </div>
+      </div>
+  </mat-card>
+
+  <div *ngIf="getAllDonations().length > 6" fxLayout="row wrap">
+      <div fxFlex="100">
+          <mat-card class="p-2 text-center">
+              <pagination-controls class="product-pagination" autoHide="true" maxSize="5" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+</div>

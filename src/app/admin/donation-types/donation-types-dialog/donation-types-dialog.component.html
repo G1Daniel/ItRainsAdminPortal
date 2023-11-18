@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Donation Type</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+          <div class="photo-section">
+            <img [src]="url1" height="50">
+            <input type="file" accept="image/*" formControlName="imageUrl" (change)="onImageSelected($event)"/>
+            <mat-error *ngIf="form.controls.imageUrl.errors?.required">Donation type image is required</mat-error>
+           </div>
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Donation Type name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Donation Type name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Description</mat-label>
+                  <input matInput placeholder="Description" formControlName="description" required>
+                  <mat-error *ngIf="form.controls.description.errors?.required">Description is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!DonationService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="DonationService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>
+

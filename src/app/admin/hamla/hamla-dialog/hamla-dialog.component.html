@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Hamla</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Hamla Name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Hamla name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mobile</mat-label>
+                    <input matInput placeholder="Mobile" formControlName="mobile" required>
+                    <mat-error *ngIf="form.controls.mobile.errors?.required">Mobile name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Contact Person</mat-label>
+                    <input matInput placeholder="Contact Person" formControlName="contactPerson" required>
+                    <mat-error *ngIf="form.controls.contactPerson.errors?.required">Contact Person name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div  class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Address</mat-label>
+                  <input matInput placeholder="Address" formControlName="address" required>
+                  <mat-error *ngIf="form.controls.address.errors?.required">Address is required</mat-error>
+              </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!hamlaService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="hamlaService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

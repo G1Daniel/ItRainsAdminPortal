@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>State</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div>
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="State name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">State name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+          <div  class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Country</mat-label>
+                <mat-select formControlName="countryId">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchCountryIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let country of  filterCountryList()" [value]="country.id">
+                      {{country.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.countryId.errors?.required">Country is required</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!stateService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="stateService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

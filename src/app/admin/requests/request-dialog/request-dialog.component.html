@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Offer to {{ getCompany(data.Request.companyId)}}</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div >
+            <div  class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Quantity</mat-label>
+                    <input type="number" matInput placeholder="Quantity to offer" formControlName="quantity" required>
+                    <mat-error *ngIf="form.controls.quantity.errors?.required">Quantity is required</mat-error>
+                </mat-form-field>
+            </div>
+
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!loading" mat-raised-button color="primary" type="submit">Offer</button>
+            <button  *ngIf="loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

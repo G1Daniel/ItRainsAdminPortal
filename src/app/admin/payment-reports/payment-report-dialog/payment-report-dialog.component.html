@@ -1,0 +1,76 @@
+<h1 mat-dialog-title>Donation</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div>
+            <div class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Full Name</mat-label>
+                    <input matInput placeholder="full Name" formControlName="fullName" required>
+                    <mat-error *ngIf="form.controls.fullName.errors?.required">Full name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Email</mat-label>
+                  <input matInput placeholder="email" formControlName="email" required>
+                  <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+              </mat-form-field>
+          </div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Phone</mat-label>
+                <input matInput placeholder="phone" formControlName="phone" required>
+                <mat-error *ngIf="form.controls.phone.errors?.required">Phone is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Selected Bank</mat-label>
+                <input matInput placeholder="selected bank" formControlName="selectedBank" required>
+                <mat-error *ngIf="form.controls.selectedBank.errors?.required">Selected bank is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Account No</mat-label>
+                <input matInput placeholder="accountNo" formControlName="accountNo" required>
+                <mat-error *ngIf="form.controls.accountNo.errors?.required">Account No is required</mat-error>
+            </mat-form-field>
+        </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="amount" formControlName="amount" required>
+                <mat-error *ngIf="form.controls.amount.errors?.required">Amount is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Reported On</mat-label>
+              <div class="date">
+                <input matInput [matDatepicker]="reportedOnpicker" formControlName="reportedOn" placeholder="NaN/NaN/NaN" name="reportedOn" required>
+                <mat-datepicker #reportedOnpicker></mat-datepicker>
+                <mat-icon (click)="reportedOnpicker.open()">calendar_today</mat-icon>
+              </div>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!PaymentReportService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="PaymentReportService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

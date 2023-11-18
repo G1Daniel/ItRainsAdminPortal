@@ -1,0 +1,76 @@
+<h1 mat-dialog-title>Accommodation</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="name" formControlName="name" required>
+                    <mat-error *ngIf="form.controls.name.errors?.required">Name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>City</mat-label>
+                  <mat-select formControlName="cityId" disableOptionCentering="true">
+                      <div class="search-space">
+                          <mat-icon class="mx-2">search</mat-icon>
+                          <input [(ngModel)]="searchCityIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                        </div>
+                      <div>
+                          <mat-option  *ngFor="let city of  filterCityList()" [value]="city.id">
+                              {{city.name}}
+                          </mat-option>
+                      </div>
+
+                    </mat-select>
+                  <mat-error *ngIf="form.controls.cityId.errors?.required">City is required</mat-error>
+              </mat-form-field>
+          </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>District</mat-label>
+                    <input matInput placeholder="district" formControlName="district" required>
+                    <mat-error *ngIf="form.controls.district.errors?.required">District is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Address</mat-label>
+                  <input matInput placeholder="address" formControlName="address" required>
+                  <mat-error *ngIf="form.controls.address.errors?.required">Address is required</mat-error>
+              </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="mobile" formControlName="mobile" required>
+                <mat-error *ngIf="form.controls.mobile.errors?.required">Mobile is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Contact Person</mat-label>
+                <input matInput placeholder="contactPerson" formControlName="contactPerson" required>
+                <mat-error *ngIf="form.controls.contactPerson.errors?.required">Contact person is required</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!accommodationService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="accommodationService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

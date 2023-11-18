@@ -1,0 +1,57 @@
+
+<div class="p-1">
+  <mat-card class="p-0">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="w-100 p-1">
+          <h2>Notification List</h2>
+
+
+          <div fxLayout="row wrap" class="items-center">
+              <div class="mx-3">
+                  <input type="search" class="form-control h-9 p-1" placeholder="Search.." [(ngModel)]="searchKey"/>
+                </div>
+
+                <button  mat-raised-button color="primary"  (click)="openNotificationDialog(null,true)" class="w-20">
+                  <mat-icon>add_circle</mat-icon>
+                  <!-- Add -->
+              </button>
+          </div>
+
+
+
+      </div>
+      <mat-divider></mat-divider>
+      <div class="mat-table admin-table">
+          <div class="mat-header-row">
+              <div class="mat-header-cell">Title</div>
+              <div class="mat-header-cell">Content</div>
+              <div class="mat-header-cell">Actions</div>
+          </div>
+          <button class="loading"  *ngIf="NotificationService.loading" color="primary">
+              <app-loading-spinner></app-loading-spinner>
+           </button>
+          <div *ngIf="!NotificationService.loading">
+             <div  *ngFor="let type of getAllNotificationList() | paginate: { itemsPerPage: count, currentPage: page }" class="mat-row">
+              <div class="mat-cell">{{type.title}}</div>
+              <div class="mat-cell">{{type.message}}</div>
+
+              <div class="mat-cell">
+                  <button mat-mini-fab color="primary" class="mx-2" matTooltip="Edit" (click)="openNotificationDialog(type,false)">
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-mini-fab color="warn" matTooltip="Delete" class="mx-1" (click)="remove(type)">
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </div>
+          </div>
+          </div>
+      </div>
+  </mat-card>
+
+  <div *ngIf="getAllNotificationList().length > 6" fxLayout="row wrap">
+      <div fxFlex="100">
+          <mat-card class="p-2 text-center">
+              <pagination-controls class="product-pagination" autoHide="true" maxSize="5" (pageChange)="onPageChanged($event)"></pagination-controls>
+          </mat-card>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.search-space{
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+
+input{
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  border: none;
+ }
+ input:focus{
+  outline: none;
+ }
+ .date-container{
+  width: 45%;
+  margin-right: 20px;
+ }
+ .date{
+  //  width: 200px;
+  //  height: 53px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  //  padding-left: 10px;
+  //  padding-right: 10px;
+  //  border-radius: 12px;
+  //  border: 0.1rem solid rgba(0,0, 0, 0.1);
+ }
+
+ .date input{
+   border: none;
+ }
+ .date input:focus{
+      outline: none;
+}
+ .mat-dialog-content{
+  width: 500px;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.8em 0px !important;}
+
+@media screen and (max-width:768){
+  .mat-dialog-content{
+    width: 100%;
+  }
+}

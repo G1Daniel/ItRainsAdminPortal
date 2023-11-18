@@ -1,0 +1,5 @@
+<div class="top-section">
+  <button class="onhold-btn" (click)="printPage()" id="onhold-btn">Print</button>
+  <h1>Customer Id QrCode</h1>
+</div>
+<qrcode [qrdata]="data.custNo" [width]="350" [errorCorrectionLevel]="'M'"></qrcode>

@@ -1,0 +1,47 @@
+<mat-toolbar color="primary" class="admin-toolbar mat-elevation-z2">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div class="logo-section" fxShow="false" fxShow.gt-xs>
+                <a routerLink="/admin" fxLayout="row" fxLayoutAlign="start center" class="logo">
+                    <h2>IShare</h2>
+                </a>
+            </div>
+            <button mat-icon-button (click)="toggleSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <button fxShow="false" fxShow.gt-xs mat-icon-button (click)="settings.adminSidenavUserBlock = !settings.adminSidenavUserBlock">
+                <mat-icon>person</mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <app-fullscreen></app-fullscreen>
+            <a mat-icon-button routerLink="/">
+              <mat-icon>power_settings_new</mat-icon>
+             </a>
+        </div>
+    </div>
+</mat-toolbar>
+<mat-drawer-container class="admin-container">
+    <mat-drawer #sidenav [opened]="settings.adminSidenavIsOpened" [mode]="(settings.adminSidenavIsPinned) ? 'side' : 'over'" class="admin-sidenav mat-elevation-z6" autoFocus="false">
+        <perfect-scrollbar>
+            <div fxLayout="column" fxLayoutAlign="center center" class="user-block transition-2" [class.show]="settings.adminSidenavUserBlock">
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info-wrapper">
+                    <!-- <img [src]="userImage" alt="user-image" height="80" width="120"> -->
+                    <div class="user-info">
+                        <h2 class="name">{{getCompany(loginService.userId)}}</h2>
+                        <p class="position">{{loginService.role=='admin'?'Admin':'Beneficiary'}}</p>
+                    </div>
+                </div>
+                <button  button  mat-raised-button color="primary"  style="margin-top: 20px;font-size: 12px;" (click)="sendResetPasswordLink()">
+                  Reset Password
+              </button>
+
+            </div>
+            <app-admin-menu [menuItems]="menuItems" [menuParentId]="0"></app-admin-menu>
+        </perfect-scrollbar>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-breadcrumb></app-breadcrumb>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

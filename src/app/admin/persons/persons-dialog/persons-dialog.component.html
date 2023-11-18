@@ -1,0 +1,185 @@
+<h1 mat-dialog-title>Customer</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+      <div class="photo-section">
+        <img [src]="form.value.imageUrl" height="150">
+        <input type="file" accept="image/*" (change)="onImageSelected($event)"/>
+      </div>
+        <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Full Name</mat-label>
+                    <input matInput placeholder="Full name" formControlName="fullName" required>
+                    <mat-error *ngIf="form.controls.fullName.errors?.required">Full name is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Customer Number</mat-label>
+                  <input matInput placeholder="Customer number" formControlName="custNo" required>
+                  <mat-error *ngIf="form.controls.custNo.errors?.required">Customer number is required</mat-error>
+              </mat-form-field>
+          </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Mother Name</mat-label>
+                    <input matInput placeholder="Mother Name" formControlName="motherName" required>
+                    <mat-error *ngIf="form.controls.motherName.errors?.required">Mother name is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Passport Number</mat-label>
+                  <input matInput placeholder="Passport Number" formControlName="passNo" required>
+                  <mat-error *ngIf="form.controls.passNo.errors?.required">Passport number is required</mat-error>
+              </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nationality</mat-label>
+                <mat-select formControlName="nationality">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchCountryIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let country of  filterCountryList()" [value]="country.name">
+                      {{country.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.nationality.errors?.required">Nationality is required</mat-error>
+            </mat-form-field>
+          </div>
+
+
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Date of Birth</mat-label>
+              <div class="date">
+                <input matInput [matDatepicker]="departurepicker" formControlName="dob" placeholder="NaN/NaN/NaN" name="departure" required>
+                <mat-datepicker #departurepicker></mat-datepicker>
+                <mat-icon (click)="departurepicker.open()">calendar_today</mat-icon>
+              </div>
+              <mat-error *ngIf="form.controls.dob.errors?.required">
+                Date of birth is required
+              </mat-error>
+            </mat-form-field>
+         </div>
+
+
+           <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender" disableOptionCentering="true">
+                    <mat-option *ngFor="let gender of  genders" [value]="gender">
+                      {{genderList[gender]}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.gender.errors?.required">Gender is required</mat-error>
+            </mat-form-field>
+          </div>
+
+           <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>nextKin</mat-label>
+                <input matInput placeholder="nextKin" formControlName="nextKin" required>
+                <mat-error *ngIf="form.controls.nextKin.errors?.required">nextKin is required</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Mobile</mat-label>
+              <input matInput placeholder="mobile" formControlName="mobile" required>
+              <mat-error *ngIf="form.controls.mobile.errors?.required">Mobile is required</mat-error>
+          </mat-form-field>
+         </div>
+
+         <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+              <mat-label>nkMobile</mat-label>
+              <input matInput placeholder="nkMobile" formControlName="nkMobile" required>
+              <mat-error *ngIf="form.controls.nkMobile.errors?.required">nkMobile is required</mat-error>
+          </mat-form-field>
+         </div>
+
+
+
+            <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>City</mat-label>
+                  <mat-select formControlName="cityId" disableOptionCentering="true">
+                      <div class="search-space">
+                          <mat-icon class="mx-2">search</mat-icon>
+                          <input [(ngModel)]="searchCityIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                        </div>
+                      <div>
+                          <mat-option  *ngFor="let city of  filterCityList()" [value]="city.id">
+                              {{city.name}}
+                          </mat-option>
+                      </div>
+
+                    </mat-select>
+                  <mat-error *ngIf="form.controls.cityId.errors?.required">City is required</mat-error>
+              </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="regionId">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchRegionIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let region of  filterRegionList()" [value]="region.id">
+                      {{region.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.regionId.errors?.required">Region is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="stateId">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchStateIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <mat-option *ngFor="let state of  filterStateList()" [value]="state.id">
+                      {{state.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.stateId.errors?.required">State is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Agent Name</mat-label>
+                <mat-select formControlName="agentId">
+                    <mat-option *ngFor="let agent of  agentService.agentsList" [value]="agent.id">
+                      {{agent.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.agentId.errors?.required">Agent is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!customerService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="customerService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

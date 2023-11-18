@@ -1,0 +1,105 @@
+<h1 mat-dialog-title>Accommodation Customer</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div fxLayout="row wrap">
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Accommodation</mat-label>
+                <mat-select formControlName="accoId" disableOptionCentering="true">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchAccommodationIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <div>
+                        <mat-option  *ngFor="let accommodation of  filterAccommodationsList()" [value]="accommodation.id">
+                            {{accommodation.name}}
+                        </mat-option>
+                    </div>
+
+                  </mat-select>
+                <mat-error *ngIf="form.controls.accoId.errors?.required">Accommodation is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>customer</mat-label>
+                <mat-select formControlName="custId" disableOptionCentering="true">
+                    <div class="search-space">
+                        <mat-icon class="mx-2">search</mat-icon>
+                        <input [(ngModel)]="searchCustomerIndex"  placeholder="Search.." [ngModelOptions]="{standalone: true}">
+                      </div>
+                    <div>
+                        <mat-option  *ngFor="let customer of  filterCustomersList()" [value]="customer.id">
+                            {{customer.fullName}}
+                        </mat-option>
+                    </div>
+
+                  </mat-select>
+                <mat-error *ngIf="form.controls.custId.errors?.required">Customer is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Room Unit</mat-label>
+                    <input matInput placeholder="room unit" formControlName="roomUnit" required>
+                    <mat-error *ngIf="form.controls.roomUnit.errors?.required">Room unit is required</mat-error>
+                </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="33.3" class="px-1">
+            <mat-form-field appearance="outline" class="nw-100">
+                <mat-label>Is Active</mat-label>
+                <mat-select formControlName="isActive" disableOptionCentering="true">
+                    <mat-option *ngFor="let status of statuses" [value]="status">
+                      {{statusList[status]}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.isActive.errors?.required">Is active is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Check In Date</mat-label>
+              <div class="date">
+                <input matInput [matDatepicker]="checkInpicker" formControlName="checkInDate" placeholder="NaN/NaN/NaN" name="check in date" required>
+                <mat-datepicker #checkInpicker></mat-datepicker>
+                <mat-icon (click)="checkInpicker.open()">calendar_today</mat-icon>
+              </div>
+              <mat-error *ngIf="form.controls.checkInDate.errors?.required">
+                Check in date is required
+              </mat-error>
+            </mat-form-field>
+         </div>
+
+         <div fxFlex="100" fxFlex.gt-sm="50" class="px-1">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Check Out Date</mat-label>
+            <div class="date">
+              <input matInput [matDatepicker]="checkOutpicker" formControlName="checkOutDate" placeholder="NaN/NaN/NaN" name="check out date" required>
+              <mat-datepicker #checkOutpicker></mat-datepicker>
+              <mat-icon (click)="checkOutpicker.open()">calendar_today</mat-icon>
+            </div>
+            <mat-error *ngIf="form.controls.checkOutDate.errors?.required">
+              Check out date is required
+            </mat-error>
+          </mat-form-field>
+       </div>
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!accommodationService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="accommodationService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>

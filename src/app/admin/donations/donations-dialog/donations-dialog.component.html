@@ -1,0 +1,123 @@
+<h1 mat-dialog-title>Donation</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div mat-dialog-content>
+        <div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Donation Type</mat-label>
+                <mat-select formControlName="donationTypeId" multiple>
+                    <mat-option *ngFor="let donation of  getDonationTypes()" [value]="donation.id">
+                      {{donation.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.donationTypeId.errors?.required">Nationality is required</mat-error>
+            </mat-form-field>
+          </div>
+            <div class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Description</mat-label>
+                    <input matInput placeholder="Description" formControlName="description" required>
+                    <mat-error *ngIf="form.controls.description.errors?.required">Description is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Quantity</mat-label>
+                  <input matInput placeholder="Quantity" formControlName="quantity" required>
+                  <mat-error *ngIf="form.controls.quantity.errors?.required">Quantity is required</mat-error>
+              </mat-form-field>
+          </div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Condition</mat-label>
+                <input matInput placeholder="Condition" formControlName="condition" required>
+                <mat-error *ngIf="form.controls.condition.errors?.required">Condition is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Delivery Type</mat-label>
+                <mat-select formControlName="deliveryTypeId">
+                    <mat-option *ngFor="let delivery of  getDeliveryTypes()" [value]="delivery.id">
+                      {{delivery.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="form.controls.deliveryTypeId.errors?.required">Delivery is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Available Date</mat-label>
+              <div class="date">
+                <input matInput [matDatepicker]="availableDate" formControlName="availableDate" placeholder="NaN/NaN/NaN" name="departure" required>
+                <mat-datepicker #availableDate></mat-datepicker>
+                <mat-icon (click)="availableDate.open()">calendar_today</mat-icon>
+              </div>
+            </mat-form-field>
+          </div>
+            <div class="px-1">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" formControlName="address" required>
+                    <mat-error *ngIf="form.controls.address.errors?.required">Address is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="px-1">
+              <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Remark</mat-label>
+                  <input matInput placeholder="Remark" formControlName="remark" required>
+                  <mat-error *ngIf="form.controls.remark.errors?.required">Remark is required</mat-error>
+              </mat-form-field>
+          </div>
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Posted on</mat-label>
+              <div class="date">
+                <input matInput [matDatepicker]="postedOnpicker" formControlName="postedOn" placeholder="NaN/NaN/NaN" name="departure" required>
+                <mat-datepicker #postedOnpicker></mat-datepicker>
+                <mat-icon (click)="postedOnpicker.open()">calendar_today</mat-icon>
+              </div>
+            </mat-form-field>
+          </div>
+           <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status" disableOptionCentering="true">
+                    <mat-option *ngFor="let status of  donationStatuses" [value]="status">
+                      {{donationStatusList[status]}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.status.errors?.required">Status is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="px-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Availability</mat-label>
+                <mat-select formControlName="isAvailable" disableOptionCentering="true">
+                    <mat-option *ngFor="let isAvailable of  availableList" [value]="isAvailable">
+                      {{isAvailable==true?"Available":"Not Available"}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.isAvailable.errors?.required">Availability is required</mat-error>
+            </mat-form-field>
+          </div>
+
+
+
+        </div>
+
+    </div>
+    <div mat-dialog-actions>
+        <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100">
+            <button mat-raised-button color="warn" type="button" mat-dialog-close><mat-icon>close</mat-icon></button>
+            <button  *ngIf="!donationService.loading" mat-raised-button color="primary" type="submit"><mat-icon>save</mat-icon></button>
+            <button  *ngIf="donationService.loading" mat-raised-button color="primary" type="submit">
+                <mat-icon><mat-spinner diameter="20" color="accent">
+                </mat-spinner></mat-icon>
+            </button>
+        </div>
+    </div>
+</form>
